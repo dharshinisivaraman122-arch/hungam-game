@@ -14,48 +14,50 @@
 
 <body>
 
-<div class="login-container">
+<h1 class="logo">🎮 Hangman Pro Max</h1>
 
-    <div class="glass-card">
+<p class="subtitle">
+    Guess. Win. Climb the Leaderboard.
+</p>
 
-        <h1>🎮 Hangman Pro Max</h1>
+<div class="feature-box">
+    <span>🏆 Leaderboard</span>
+    <span>🔥 Achievements</span>
+    <span>⏱ Timer</span>
+</div>
 
-        <p>
-            Advanced Flask Hangman Game
-        </p>
+<form action="/login" method="POST">
 
-        <form action="/login" method="POST">
+    <input
+        type="text"
+        name="username"
+        placeholder="Enter Username"
+        required>
 
-            <input
-                type="text"
-                name="username"
-                placeholder="Enter Username"
-                required>
+    <select name="difficulty">
 
-            <select name="difficulty">
+        <option value="easy">
+            Easy (8 Lives)
+        </option>
 
-                <option value="easy">
-                    Easy (8 Lives)
-                </option>
+        <option value="medium" selected>
+            Medium (6 Lives)
+        </option>
 
-                <option value="medium" selected>
-                    Medium (6 Lives)
-                </option>
+        <option value="hard">
+            Hard (4 Lives)
+        </option>
 
-                <option value="hard">
-                    Hard (4 Lives)
-                </option>
+    </select>
 
-            </select>
+    <button type="submit">
+        🚀 Start Adventure
+    </button>
 
-            <button type="submit">
-                Start Game
-            </button>
+</form>
 
-        </form>
-
-    </div>
-
+<div class="footer-text">
+    Developed by Dharshini S
 </div>
 
 </body>
