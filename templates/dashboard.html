@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+
+<title>Dashboard</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <div class="topbar">
+
+        <h2>
+            Welcome,
+            {{ player }}
+        </h2>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+    <div class="dashboard-cards">
+
+        <div class="card">
+            <h3>🎯 Play Game</h3>
+
+            <p>
+                Start a new Hangman challenge
+            </p>
+
+            <a href="/game">
+                Play Now
+            </a>
+        </div>
+
+        <div class="card">
+
+            <h3>🏆 Leaderboard</h3>
+
+            <div id="leaderboard">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>📊 Statistics</h3>
+
+            <div id="stats">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+fetch('/leaderboard')
+.then(r => r.json())
+.then(data => {
+
+    let html = "";
+
+    data.forEach(player => {
+
+        html += `
+            <p>
+                ${player.player}
+                -
+                ${player.score}
+            </p>
+        `;
+
+    });
+
+    document.getElementById(
+        "leaderboard"
+    ).innerHTML = html;
+
+});
+
+fetch('/stats')
+.then(r => r.json())
+.then(data => {
+
+    document.getElementById(
+        "stats"
+    ).innerHTML = `
+        <p>Games Played:
+        ${data.games_played}</p>
+
+        <p>Games Won:
+        ${data.games_won}</p>
+
+        <p>Score:
+        ${data.score}</p>
+    `;
+
+});
+
+</script>
+
+</body>
+</html>
