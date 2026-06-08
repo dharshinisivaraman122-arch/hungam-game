@@ -1,6 +1,12 @@
 import random
 import json
 import os
+from flask import Flask
+
+app = Flask(__name__)
+
+# Reads the key from Render's environment, or uses a local fallback for testing
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'local-dev-key-only')
 
 from flask import (
     Flask,
