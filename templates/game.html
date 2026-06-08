@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Play Game</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="game-container">
+
+    <div class="glass-card">
+
+        <h1>🎮 Hangman Pro Max</h1>
+
+        <div id="hangman">
+
+            😀
+
+        </div>
+
+        <div class="game-info">
+
+            <h3 id="category">
+                Category
+            </h3>
+
+            <h3 id="score">
+                Score: 0
+            </h3>
+
+            <h3 id="lives">
+                Lives: 6
+            </h3>
+
+        </div>
+
+        <div id="word">
+
+            Loading...
+
+        </div>
+
+        <input
+            type="text"
+            maxlength="1"
+            id="letter"
+            placeholder="Enter Letter">
+
+        <div class="buttons">
+
+            <button onclick="guessLetter()">
+                Guess
+            </button>
+
+            <button onclick="useHint()">
+                Hint
+            </button>
+
+            <button onclick="newGame()">
+                New Game
+            </button>
+
+        </div>
+
+        <div class="hint-box">
+
+            <strong>Hint:</strong>
+
+            <span id="hint"></span>
+
+        </div>
+
+        <div id="message">
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function loadGame(){
+
+    const res =
+    await fetch('/state');
+
+    const data =
+    await res.json();
+
+    document.getElementById(
+        "category"
+    ).innerHTML =
+    "📂 " + data.category;
+
+    document.getElementById(
+        "score"
+    ).innerHTML =
+    "⭐ Score: " +
+    data.score;
+
+    document.getElementById(
+        "lives"
+    ).innerHTML =
+    "❤️ Lives: " +
+    (data.max_wrong -
+    data.wrong);
+
+    document.getElementById(
+        "word"
+    ).innerHTML =
+    data.revealed.join(" ");
+
+    document.getElementById(
+        "hint"
+    ).innerHTML =
+    data.hint;
+
+    if(data.game_over){
+
+        if(data.won){
+
+            document.getElementById(
+                "message"
+            ).innerHTML =
+            "🎉 YOU WON!";
+
+        }
+        else{
+
+            document.getElementById(
+                "message"
+            ).innerHTML =
+            "💀 GAME OVER<br>Word: "
+            + data.word;
+
+        }
+
+    }
+
+}
+
+async function guessLetter(){
+
+    let letter =
+    document.getElementById(
+        "letter"
+    ).value;
+
+    await fetch('/guess',{
+
+        method:'POST',
+
+        headers:{
+            'Content-Type':
+            'application/json'
+        },
+
+        body:JSON.stringify({
+            letter:letter
+        })
+
+    });
+
+    document.getElementById(
+        "letter"
+    ).value="";
+
+    loadGame();
+
+}
+
+async function useHint(){
+
+    await fetch('/hint',{
+        method:'POST'
+    });
+
+    loadGame();
+
+}
+
+async function newGame(){
+
+    await fetch('/new_game');
+
+    loadGame();
+
+}
+
+loadGame();
+
+</script>
+
+</body>
+</html>
