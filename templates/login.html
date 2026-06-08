@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hangman Pro Max</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="glass-card">
+
+        <h1>🎮 Hangman Pro Max</h1>
+
+        <p>
+            Advanced Flask Hangman Game
+        </p>
+
+        <form action="/login" method="POST">
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Enter Username"
+                required>
+
+            <select name="difficulty">
+
+                <option value="easy">
+                    Easy (8 Lives)
+                </option>
+
+                <option value="medium" selected>
+                    Medium (6 Lives)
+                </option>
+
+                <option value="hard">
+                    Hard (4 Lives)
+                </option>
+
+            </select>
+
+            <button type="submit">
+                Start Game
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
